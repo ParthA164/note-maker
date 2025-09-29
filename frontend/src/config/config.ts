@@ -4,7 +4,7 @@ const config = {
     API_URL: 'http://localhost:5000/api',
   },
   production: {
-    API_URL: 'https://note-maker-1-ktaj.onrender.com/api',
+    API_URL: '/api', // Relative path since frontend and backend are on same domain
   }
 };
 

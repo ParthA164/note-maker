@@ -3,6 +3,7 @@ import cors from 'cors';
 import helmet from 'helmet';
 import rateLimit from 'express-rate-limit';
 import dotenv from 'dotenv';
+import path from 'path';
 import connectDB from './config/database';
 import authRoutes from './routes/auth';
 import noteRoutes from './routes/notes';
@@ -51,13 +52,24 @@ app.get('/api/health', (req, res) => {
   });
 });
 
+// Serve static files from frontend build
+const frontendBuildPath = path.join(__dirname, 'frontend/build');
+app.use(express.static(frontendBuildPath));
+
+// Handle React client-side routing - serve index.html for non-API routes
+app.get('*', (req, res) => {
+  // Don't serve index.html for API routes
+  if (req.path.startsWith('/api/')) {
+    res.status(404).json({ message: 'API route not found' });
+    return;
+  }
+  
+  // Serve index.html for all other routes (React routing)
+  res.sendFile(path.join(frontendBuildPath, 'index.html'));
+});
+
 // Error handling middleware
 app.use(errorHandler);
-
-// Handle 404
-app.use('*', (req, res) => {
-  res.status(404).json({ message: 'Route not found' });
-});
 
 // Start server
 app.listen(PORT, '0.0.0.0', () => {
