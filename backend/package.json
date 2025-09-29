@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "nodemon src/server.ts",
     "build": "npm run build:frontend && npm run build:backend && npm run copy:frontend",
-    "build:frontend": "cd ../frontend && npm ci && npm run build",
+    "build:frontend": "cd ../frontend && npm install && npm run build",
     "build:backend": "tsc",
     "copy:frontend": "npx cpx \"../frontend/build/**\" \"dist/frontend/build\"",
     "start": "node dist/server.js",
