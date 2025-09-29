@@ -1,3 +1,5 @@
+import { GOOGLE_CLIENT_ID } from '../config/config';
+
 declare global {
   interface Window {
     google: {
@@ -41,7 +43,7 @@ class GoogleAuthService {
 
   constructor() {
     // Using a development-friendly Google Client ID that allows localhost
-    this.clientId = process.env.REACT_APP_GOOGLE_CLIENT_ID || '347188652133-imqpjp4qdfjf22vqcgvlvqmm5qsgsr4t.apps.googleusercontent.com';
+    this.clientId = GOOGLE_CLIENT_ID;
   }
 
   async initialize(): Promise<void> {
